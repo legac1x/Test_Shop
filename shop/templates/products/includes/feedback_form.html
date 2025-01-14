@@ -1,0 +1,16 @@
+<form action="{% url 'feedback' product.id %}" method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label class="form-label">Ваше имя:</label>
+            {{ form.name }}
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Оценка:</label>
+            {{ form.mark }}
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Отзыв:</label>
+            {{ form.body }}
+    </div>
+    <button type="submit" class="btn btn-primary">Оставить отзыв</button>
+</form>

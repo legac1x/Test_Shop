@@ -1,0 +1,9 @@
+{% extends 'main.html' %}
+{% block context %}
+    {% if feedback %}
+        <h2>Спасибо большое вам за отзыв!</h2>
+        <a href="{% url 'products_detail' product.slug %}">Вернуться к товару</a>
+    {% else %}
+        {% include 'products/includes/feedback_form.html' %}
+    {% endif %}
+{% endblock %}

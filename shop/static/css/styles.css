@@ -1,0 +1,27 @@
+.product-table {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: flex-start;
+}
+
+.product {
+    flex: 1 1 calc(25% - 20px); /* Позволяет элементам гибко изменять свою ширину */
+    max-width: 25%; /* Ограничивает максимальную ширину 25% */
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.product img {
+    max-width: 100%;
+    height: auto;
+}

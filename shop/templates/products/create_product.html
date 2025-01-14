@@ -1,0 +1,22 @@
+{% extends 'main.html' %}
+
+{% block context %}
+    <div class="container mt-5">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Добавление товара на сайт</h4>
+            </div>
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group mb-3">
+                        {{ form.as_p }}
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn btn-primary">Добавить товар</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'main.html' %}
+{% load custom_filters %}
+
+{% block context %}
+    <div class="container my-4">
+        <h2 class="text-center mb-4">Оформление заказа</h2>
+        <div class="text-center mb-3">
+            <h4>Количество товаров: {{ items.count|pluralize_ru:"Товар" }}</h4>
+        </div>
+        <div class="row">
+            {% for product in items %}
+                <div class="col-md-4 mb-3">
+                    <img src="{{ product.thumbnail.url }}" alt="{{ product.title }}" class="img-fluid mb-2">
+                    <h5>{{ product.title }}</h5>
+                    <p>Цена: {{ product.price }} руб.</p>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-4">
+            <strong>Общая сумма: {{ total_sum }} руб.</strong>
+        </div>
+    </div>
+{% endblock %}

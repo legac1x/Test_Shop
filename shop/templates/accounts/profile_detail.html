@@ -1,0 +1,27 @@
+{% extends 'main.html' %}
+
+{% block context %}
+<div class="container my-4">
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <img src="{{ profile.avatar.url }}" alt="{{ profile }}" class="img-fluid rounded-0">
+        </div>
+        <div class="col-md-8">
+            <h2>{{ profile }}</h2>
+            <hr>
+            <ul>
+                <li>Никнейм: {{ profile.user.username }}</li>
+                {% if profile.user.get_full_name %}
+                <li>Имя и фамилия: {{ profile.user.get_full_name }}</li>
+                {% endif %}
+                <li>Заходил: {{ profile.user.last_login }}</li>
+                <li>Дата рождения: {{ profile.birth_date }}</li>
+                <li>О себе: {{ profile.bio }}</li>
+            </ul>
+            {% if request.user == profile.user %}
+                <a href="{% url 'profile_edit' %}" class="btn btn-sm btn-primary">Редактировать профиль</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

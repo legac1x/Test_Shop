@@ -1,0 +1,45 @@
+{% extends 'main.html' %}
+{% load custom_filters %}
+{% block context %}
+    <div class="container my-4">
+        <h2 class="text-center"><strong>Корзина</strong></h2>
+        <div class="row">
+            <div class="col-lg-8">
+                {% if products %}
+                    <div class="d-flex flex-column">
+                        {% for item in products %}
+                            <div class="card m-2" style="width: 18rem;">
+                                <img src="{{ item.thumbnail.url }}" alt="{{ item.title }}" class="card-img-top" style="height: 200px; object-fit: cover;">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ item.title }}</h5>
+                                    <p class="card-text">Цена: {{ item.price }} руб.</p>
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="product_{{ item.id }}" name="product_ids" value="{{ item.id }}">
+                                    </div>
+                                    <form method="post" action="{% url 'cartlist' cart.id %}">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="product_id" value="{{ item.id }}">
+                                        <button type="submit" class="btn btn-danger">Удалить</button>
+                                    </form>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <h4 class="text-center">Ваша корзина пуста</h4>
+                    <h5 class="text-center">Выберите товары в нашем магазине <a href="{% url 'home' %}">Главная</a> и возвращайтесь для оплаты </h5>
+                {% endif %}
+            </div>
+            <div class="col-lg-3">
+                <div>
+                    <h5>Количество товаров: {{ products.count|pluralize_ru:"Товар" }}</h5>
+                    <h5>Общая сумма: {{ total_sum }} руб.</h5>
+                    <form action="{% url 'checkout' cart.id %}" method="get">
+                        {% csrf_token %}
+                        <input type="submit" value="Перейти к офомлению">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

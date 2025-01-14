@@ -1,0 +1,16 @@
+{% extends 'main.html' %}
+
+{% block context %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-sm-8">
+            <h4 class="text-center mb-4">Авторизация на сайте</h4>
+            <form action="{% url 'login' %}" method="post" class="border p-4 rounded shadow-sm">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary w-100 mt-3">Войти</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
