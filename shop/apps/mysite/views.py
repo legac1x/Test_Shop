@@ -100,13 +100,11 @@ class ProductFromCategoryView(ListView):
         self.category = Category.objects.get(slug=self.kwargs.get('slug'))
         parent = self.category.parent
         if parent is not None:
-            queryset = Products.custom.filter(category__slug=self.category.slug)
-            if not queryset:
-                sub_cat = Category.objects.filter(parent=self.category)
-                queryset = Products.custom.filter(category__in=sub_cat)
+            queryset = Products.custom.filter(category__in=self.category.get_descendants(include_self=True))
+            print(queryset)
             return queryset
         else:
-            sub_cat = Category.objects.filter(parent=self.category) | Category.objects.filter(title=self.category)
+            sub_cat = self.category.get_descendants(include_self=True)
             queryset = Products.custom.filter(category__in=sub_cat)
             return queryset
 
