@@ -20,7 +20,9 @@
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
                         <li><a class="dropdown-item" href="{% url 'create_product' %}">Добавить товар</a></li>
-                        <li><a class="dropdown-item" href="{% url 'profile_detail' request.user.profile.slug %}">Мой профиль</a></li>
+                        {% if request.user.profile.slug %}
+                            <li><a class="dropdown-item" href="{% url 'profile_detail' request.user.profile.slug %}">Мой профиль</a></li>
+                        {% endif %}
                         <li><hr class="dropdown-divider"></li>
                         <form action="{% url 'logout' %}" method="post">
                             {% csrf_token %}

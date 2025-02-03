@@ -5,6 +5,7 @@ from django.contrib.messages.views import SuccessMessageMixin # type: ignore
 from .models import Profile
 from .forms import UserUpdateForm, ProfileUpdateForm, UserRegisterForm, UserLoginForm
 from django.contrib.auth.views import LoginView, LogoutView
+from .models import User
 
 
 
@@ -58,6 +59,7 @@ class ProfileUpdateView(UpdateView):
         return reverse_lazy('profile_detail', kwargs={'slug': self.object.slug})
 
 class UserRegisterView(SuccessMessageMixin, CreateView):
+    model = User
     form_class = UserRegisterForm
     success_url = reverse_lazy('home')
     template_name = 'accounts/user_register.html'

@@ -3,7 +3,7 @@ from django.core.validators import FileExtensionValidator
 from django.urls import reverse
 from mptt.models import TreeForeignKey, MPTTModel
 from apps.services.utils import unique_slugify
-from django.contrib.auth.models import User
+from django.conf import settings
 
 
 class ProductsIsPresent(models.Manager):
@@ -32,7 +32,7 @@ class Products(models.Model):
     update = models.DateTimeField(auto_now=True, verbose_name='Дата обновления записи')
     status = models.CharField(choices=STATUS_OPTION, max_length=12, default='present', verbose_name='Статус')
     active = models.BooleanField(default=True)
-    updater = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+    updater = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True,
                                 related_name='updater_product', blank=True, verbose_name='Обновил')
 
     objects = models.Manager()
@@ -106,7 +106,7 @@ class Category(MPTTModel):
         return reverse('products_by_category', args=[self.slug])
 
 class Cart(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE,
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
                              verbose_name='Пользователь', related_name='carts')
     create = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания корзины')
     update = models.DateTimeField(auto_now=True, verbose_name='Дата обновления корзины')
