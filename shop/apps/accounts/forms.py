@@ -40,6 +40,11 @@ class ProfileUpdateForm(forms.ModelForm):
         fields = ('slug', 'birth_date', 'bio', 'avatar')
 
 class UserRegisterForm(UserCreationForm):
+    def save(self):
+        user = super().save(commit=False)
+        user.set_password(user.password)
+        return super().save()
+
     class Meta(UserCreationForm.Meta):
         model = User
         fields = UserCreationForm.Meta.fields + ('email', 'first_name', 'last_name')

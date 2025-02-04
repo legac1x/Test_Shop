@@ -137,3 +137,11 @@ MEDIA_ROOT = (BASE_DIR / 'media/')
 MEDIA_URL = '/media/'
 
 AUTH_USER_MODEL = 'accounts.User'
+
+DEFAULT_FROM_EMAIL = 'zaharschaschev@yandex.ru'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_HOST_USER = 'zaharschaschev@yandex.ru'
+EMAIL_HOST_PASSWORD ='rlzznproccgxghko'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True

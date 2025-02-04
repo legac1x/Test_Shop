@@ -6,6 +6,9 @@ from .models import Profile
 from .forms import UserUpdateForm, ProfileUpdateForm, UserRegisterForm, UserLoginForm
 from django.contrib.auth.views import LoginView, LogoutView
 from .models import User
+from django.shortcuts import get_object_or_404, render, redirect
+from django.http import Http404
+from django.contrib import messages
 
 
 
@@ -76,6 +79,13 @@ class UserLoginView(SuccessMessageMixin, LoginView):
     next_page = 'home'
     success_message = 'Добро пожаловать на сайт'
 
+    def form_valid(self, form):
+        user = form.get_user()
+        if not user.is_verified:
+            messages.error(self.request, 'Ваш аккаунт не подтвержден. Пожалуйста, проверьте вашу почту.')
+            return redirect('home')
+        return super().form_valid(form)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Авторизация на сайте'
@@ -83,3 +93,12 @@ class UserLoginView(SuccessMessageMixin, LoginView):
 
 class UserLogoutView(SuccessMessageMixin, LogoutView):
     next_page = 'home'
+
+def verify_account(request, uuid):
+    try:
+        user = User.objects.get(verified_uuid=uuid, is_verified=False)
+    except User.DoesNotExist:
+        raise Http404("User does not exist or is already verified")
+    user.is_verified = True
+    user.save()
+    return render(request, 'accounts/verify_account.html')

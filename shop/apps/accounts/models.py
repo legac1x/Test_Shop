@@ -7,6 +7,7 @@ from django.utils import timezone
 from django.core.validators import RegexValidator
 from .manager import MyUserManage
 from django.conf import settings
+import uuid
 
 class User(AbstractBaseUser):
     username = models.CharField(max_length=50)
@@ -19,6 +20,9 @@ class User(AbstractBaseUser):
     phone_number = models.CharField(validators=[phone_regex], max_length=12, null=True, blank=True)
     first_name = models.CharField(max_length=30, null=True, blank=True)
     last_name = models.CharField(max_length=30, null=True, blank=True)
+    is_verified = models.BooleanField(default=False, verbose_name='верификация')
+    verified_uuid = models.UUIDField(default=uuid.uuid4, verbose_name='Уникальный uuid верификации')
+
     objects = MyUserManage()
 
     USERNAME_FIELD = 'email'
