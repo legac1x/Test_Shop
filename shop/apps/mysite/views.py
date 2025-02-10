@@ -7,6 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from ..services.mixins import AuthorRequiredMixin, AddProductRequiredMixin, \
 AddFeedbackRequiredMixin, CreateCartRequiredMixin
+from django.core.cache import cache
 
 class CartListView(CreateCartRequiredMixin, ListView):
     '''Просмотр корзины'''
@@ -48,6 +49,17 @@ class ProductsListView(ListView):
     context_object_name = 'products'
     template_name = 'products/products_list.html'
     paginate_by = 6
+
+    def get_queryset(self):
+        cached_products = cache.get("products_list")
+        if cached_products:
+            print(f"Кешированые объекты: {len(cached_products)} товаров")
+            return cached_products
+        else:
+            print('не кешированные объекты')
+            queryset = super().get_queryset()
+            cache.set("products_list", queryset, timeout=600)
+            return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

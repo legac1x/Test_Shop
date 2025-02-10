@@ -16,3 +16,4 @@ djvenv/
 env/
 .djvenv/
 .ENV/
+dump.rdb
