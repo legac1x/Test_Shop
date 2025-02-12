@@ -53,10 +53,8 @@ class ProductsListView(ListView):
     def get_queryset(self):
         cached_products = cache.get("products_list")
         if cached_products:
-            print(f"Кешированые объекты: {len(cached_products)} товаров")
             return cached_products
         else:
-            print('не кешированные объекты')
             queryset = super().get_queryset()
             cache.set("products_list", queryset, timeout=600)
             return queryset
@@ -113,7 +111,6 @@ class ProductFromCategoryView(ListView):
         parent = self.category.parent
         if parent is not None:
             queryset = Products.custom.filter(category__in=self.category.get_descendants(include_self=True))
-            print(queryset)
             return queryset
         else:
             sub_cat = self.category.get_descendants(include_self=True)
