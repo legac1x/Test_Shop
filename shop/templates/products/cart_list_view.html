@@ -13,9 +13,6 @@
                                 <div class="card-body">
                                     <h5 class="card-title">{{ item.title }}</h5>
                                     <p class="card-text">Цена: {{ item.price }} руб.</p>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="product_{{ item.id }}" name="product_ids" value="{{ item.id }}">
-                                    </div>
                                     <form method="post" action="{% url 'cartlist' cart.id %}">
                                         {% csrf_token %}
                                         <input type="hidden" name="product_id" value="{{ item.id }}">
