@@ -19,3 +19,4 @@ env/
 dump.rdb
 db.sqllite3
 mysite_data.json
+.git
