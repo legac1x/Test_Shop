@@ -1,7 +1,7 @@
 # Legac1x Test Shop 🛒
 
 Legac1x Test Shop is a learning project for an online store built using Django.
-The project is designed to demonstrate working with product categories, cart, orders.
+The project is designed to demonstrate working with product catalog browsing, user registration and email confirmation, authentication, and cart management.
 Modern technologies such as Celery, Redis, and PostgreSQL are used.
 
 
