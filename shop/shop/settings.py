@@ -43,7 +43,10 @@ INSTALLED_APPS = [
     'apps.mysite.apps.MysiteConfig',
     'mptt',
     'django_mptt_admin',
-    'apps.accounts'
+    'apps.accounts',
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
+    'django.contrib.postgres'
 ]
 
 MIDDLEWARE = [

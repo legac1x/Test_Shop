@@ -1,9 +1,10 @@
 from django.urls import path # type: ignore
 from .views import ProductsListView, ProductDetailView, FeedbackView, ProductFromCategoryView, \
-CartItemView, CartListView, ProductCreateView, PrdouctUpdateView, ProceedToCheckoutDetailView
+CartItemView, CartListView, ProductCreateView, PrdouctUpdateView, ProceedToCheckoutDetailView, ShopSearch
 
 urlpatterns = [
     path('', ProductsListView.as_view(), name='home'),
+    path('search/', ShopSearch.as_view(), name='shop_search'),
     path('product/create/', ProductCreateView.as_view(), name='create_product'),
     path('product/<slug:slug>/update/', PrdouctUpdateView.as_view(), name='product_update'),
     path('product/<slug:slug>', ProductDetailView.as_view(), name='products_detail'),

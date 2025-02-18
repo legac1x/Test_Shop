@@ -1,0 +1,32 @@
+{% extends 'main.html' %}
+
+{% block context %}
+<div class="container py-4">
+    {% if query %}
+        <h1 class="mb-4">Результаты поиска для "{{ query }}"</h1>
+        <div class="row">
+            {% for product in results %}
+                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        {% if product.thumbnail %}
+                            <img src="{{ product.thumbnail.url }}" class="card-img-top" alt="{{ product.title }}">
+                        {% else %}
+                            <div class="d-flex align-items-center justify-content-center bg-light text-secondary" style="height: 250px; border: 1px dashed #ccc; border-radius: 0.25rem;">
+                                <p class="mb-0">Нет изображения</p>
+                            </div>
+                        {% endif %}
+                        <div class="card-body text-center">
+                            <h5 class="card-title">
+                                <a href="{{ product.get_absolute_url }}" class="text-decoration-none text-dark">{{ product.title }}</a>
+                            </h5>
+                            <p class="card-text text-muted">{{ product.price }} руб.</p>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <p class="text-center">Нет результатов для вашего запроса.</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

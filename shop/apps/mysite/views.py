@@ -1,13 +1,14 @@
-from django.shortcuts import render, redirect # type: ignore
+from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, View, CreateView, UpdateView
 from .models import Products, Category, Cart, CartItem
-from .forms import FeedbackForm, ProductCreateForm, ProductUpdateForm
-from django.shortcuts import get_object_or_404 # type: ignore
+from .forms import FeedbackForm, ProductCreateForm, ProductUpdateForm, SearchForm
+from django.shortcuts import get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from ..services.mixins import AuthorRequiredMixin, AddProductRequiredMixin, \
 AddFeedbackRequiredMixin, CreateCartRequiredMixin
 from django.core.cache import cache
+from django.contrib.postgres.search import SearchVector, TrigramSimilarity
 
 class CartListView(CreateCartRequiredMixin, ListView):
     '''Просмотр корзины'''
@@ -197,3 +198,22 @@ class ProceedToCheckoutDetailView(View):
             'items': items
         }
         return render(request, self.template_name, context)
+
+class ShopSearch(View):
+    '''Полнотекстовый поиск'''
+    form = SearchForm()
+    query = None
+    results = []
+
+    def get(self, request, *args, **kwargs):
+        if 'query' in request.GET:
+            self.form = SearchForm(request.GET)
+
+            if self.form.is_valid():
+                self.query = self.form.cleaned_data['query']
+                self.results = Products.custom.annotate(
+                    similarity=TrigramSimilarity('title', self.query),
+                ).filter(similarity__gte=0.05).order_by('-similarity')
+        return render(request, 'products/includes/search.html', {'form': self.form,
+                                                        'query': self.query,
+                                                        'results': self.results})

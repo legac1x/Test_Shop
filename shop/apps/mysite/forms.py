@@ -16,3 +16,7 @@ class ProductUpdateForm(ProductCreateForm):
     class Meta:
         model = Products
         fields = ProductCreateForm.Meta.fields
+
+class SearchForm(forms.Form):
+    query = forms.CharField()
+

@@ -12,6 +12,10 @@
                 {% endfor %}
             </ul>
         </nav>
+        <form method="get" action="{% url 'shop_search' %}" class="d-flex">
+            <input type="text" name="query" class="form-control me-2" placeholder="Поиск" value="{{ request.GET.query }}">
+            <button class="btn btn-outline-light" type="submit">Поиск</button>
+        </form>
         <div>
             {% if user.is_authenticated %}
                 <div class="dropdown">
