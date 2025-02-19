@@ -10,7 +10,6 @@ Modern technologies such as Celery, Redis, and PostgreSQL are used.
 ✅ User registration and authentication
 ✅ Email verification for registration confirmation
 ✅ Adding products to the shopping cart
-✅ Order placement
 ✅ Full-text search
 ✅ Caching of the product catalog using Redis
 ✅ Admin panel for managing products
